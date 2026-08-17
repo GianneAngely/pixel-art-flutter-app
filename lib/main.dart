@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:submission_pixel_art/main_screen.dart';
-import 'package:submission_pixel_art/about_screen.dart';
 
-void main() => runApp(const MyApp());
+import 'about_screen.dart';
+import 'main_screen.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+void main() => runApp(const PokedexApp());
+
+class PokedexApp extends StatelessWidget {
+  const PokedexApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Pixel Gallery',
+      title: 'Pokédex',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        useMaterial3: true,
+        colorSchemeSeed: const Color(0xFFDC0A2D),
+        scaffoldBackgroundColor: const Color(0xFFF6F7F9),
       ),
       home: const MainScreen(),
       routes: {
         '/about': (context) => const AboutScreen(),
       },
-      debugShowCheckedModeBanner: false,
     );
   }
 }

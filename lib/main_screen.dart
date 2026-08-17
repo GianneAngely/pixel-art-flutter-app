@@ -1,89 +1,166 @@
 import 'package:flutter/material.dart';
-import 'package:submission_pixel_art/detail_screen.dart';
-import 'package:submission_pixel_art/model/pixel_character.dart';
 
-class MainScreen extends StatelessWidget {
-  const MainScreen({Key? key}) : super(key: key);
+import 'detail_screen.dart';
+import 'models/pokemon.dart';
+import 'services/pokemon_service.dart';
+import 'utils/type_colors.dart';
+
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  final PokemonService _service = PokemonService();
+  late Future<List<PokemonSummary>> _future;
+
+  @override
+  void initState() {
+    super.initState();
+    _future = _service.fetchList(limit: 30);
+  }
+
+  void _reload() {
+    setState(() => _future = _service.fetchList(limit: 30));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF34495E),
       appBar: AppBar(
-        title: const Text('Pixel Art Gallery 👾'),
-        backgroundColor: const Color(0xFF2C3E50),
+        backgroundColor: const Color(0xFFDC0A2D),
+        foregroundColor: Colors.white,
+        title: const Row(
+          children: [
+            Icon(Icons.catching_pokemon),
+            SizedBox(width: 8),
+            Text('Pokédex', style: TextStyle(fontWeight: FontWeight.bold)),
+          ],
+        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.person_outline),
-            onPressed: () {
-               Navigator.pushNamed(context, '/about');
-            },
-          )
+            icon: const Icon(Icons.info_outline),
+            onPressed: () => Navigator.pushNamed(context, '/about'),
+          ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            final PixelCharacter character = pixelCharacterList[index];
-            return InkWell(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return DetailScreen(character: character);
-                }));
-              },
-              child: Card(
-                color: const Color(0xFFECF0F1),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        height: 100,
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.network(
-                          character.imageAsset, 
-                          fit: BoxFit.contain,
-                          // INI PENYELAMATNYA:
-                          errorBuilder: (ctx, error, stackTrace) {
-                            return const Center(child: Icon(Icons.error, color: Colors.red));
-                          },
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Text(
-                              character.name,
-                              style: const TextStyle(
-                                fontSize: 18.0, 
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              character.gameSource,
-                              style: const TextStyle(color: Colors.black54),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
+      body: FutureBuilder<List<PokemonSummary>>(
+        future: _future,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return _ErrorView(onRetry: _reload);
+          }
+          final list = snapshot.data ?? [];
+          return GridView.builder(
+            padding: const EdgeInsets.all(12),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 210,
+              mainAxisSpacing: 12,
+              crossAxisSpacing: 12,
+              childAspectRatio: 0.88,
+            ),
+            itemCount: list.length,
+            itemBuilder: (context, i) => _PokemonCard(pokemon: list[i]),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _PokemonCard extends StatelessWidget {
+  final PokemonSummary pokemon;
+
+  const _PokemonCard({required this.pokemon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(16),
+      elevation: 2,
+      shadowColor: Colors.black26,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => DetailScreen(id: pokemon.id, name: pokemon.name),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  pokemon.dexNumber,
+                  style: TextStyle(
+                    color: Colors.grey.shade400,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            );
-          },
-          itemCount: pixelCharacterList.length,
+              Expanded(
+                child: Hero(
+                  tag: 'poke-${pokemon.id}',
+                  child: Image.network(
+                    pokemon.imageUrl,
+                    fit: BoxFit.contain,
+                    errorBuilder: (_, _, _) => const Icon(
+                      Icons.catching_pokemon,
+                      size: 44,
+                      color: Colors.black12,
+                    ),
+                    loadingBuilder: (context, child, progress) =>
+                        progress == null
+                            ? child
+                            : const Center(
+                                child: SizedBox(
+                                  width: 22,
+                                  height: 22,
+                                  child: CircularProgressIndicator(strokeWidth: 2),
+                                ),
+                              ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                capitalize(pokemon.name),
+                style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              ),
+            ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class _ErrorView extends StatelessWidget {
+  final VoidCallback onRetry;
+
+  const _ErrorView({required this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.wifi_off, size: 48, color: Colors.grey),
+          const SizedBox(height: 12),
+          const Text("Couldn't reach the Pokédex."),
+          const SizedBox(height: 12),
+          FilledButton(onPressed: onRetry, child: const Text('Retry')),
+        ],
       ),
     );
   }

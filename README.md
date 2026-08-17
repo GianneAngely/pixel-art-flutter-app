@@ -1,36 +1,37 @@
-# Pixel Art (Flutter)
+# Flutter Pokédex
 
-A small **Flutter** app — a *Pixel Art Gallery* of classic video-game characters (Mario, Sonic, Link, Pikachu, and more) that you can browse, open for details, and an about page.
+A Pokédex built with **Flutter**, powered live by the free [PokéAPI](https://pokeapi.co) — browse Pokémon in a grid, then tap any one for its types and base stats.
 
-**🔗 Live demo → [pixel-art-flutter-app.vercel.app](https://pixel-art-flutter-app.vercel.app)**
+**🔗 Live demo → [flutter-pokedex-six.vercel.app](https://flutter-pokedex-six.vercel.app)**
 
 <p align="center">
-  <img src="screenshots/app.png" width="680" alt="Pixel Art Gallery main screen: a scrollable list of game characters, each with its name and source game">
+  <img src="screenshots/home.png" width="760" alt="Pokédex home screen: a grid of Pokémon cards with official artwork and Dex numbers">
+</p>
+<p align="center">
+  <img src="screenshots/detail.png" width="380" alt="Bulbasaur detail screen: type chips, height and weight, and base stat bars">
 </p>
 
-> Character artwork is loaded from external image URLs; a few of those links no longer resolve and show a placeholder icon.
+## Features
 
-## Screens
+- **Live data** from the PokéAPI — official artwork, types, height/weight, and base stats.
+- **Grid gallery** of Pokémon with their National Dex numbers.
+- **Detail view** with a type-coloured header, type chips, and base-stat bars.
+- Graceful **loading and error states**, with retry on failure.
 
-- **Main** (`lib/main_screen.dart`) — a grid/list of pixel-art characters.
-- **Detail** (`lib/detail_screen.dart`) — a single character with its description.
-- **About** (`lib/about_screen.dart`) — info about the app.
+## How it's built
 
-Character data is modelled in [`lib/model/pixel_character.dart`](lib/model/pixel_character.dart).
+- `lib/models/` — `PokemonSummary` and `PokemonDetail` data classes.
+- `lib/services/pokemon_service.dart` — a small typed client over the PokéAPI.
+- `lib/utils/type_colors.dart` — the canonical Pokémon type colours.
+- `lib/main_screen.dart` (grid) and `lib/detail_screen.dart` (details).
 
 ## Run it
 
 ```bash
 flutter pub get
-flutter run        # on a device/emulator
-# or, for the browser:
-flutter run -d chrome
+flutter run -d chrome   # or any device / emulator
 ```
 
 ## Tech stack
 
-Flutter · Dart · Material Design
-
-## Notes
-
-Submission for Dicoding's Flutter track. The project targets Android, iOS, web, and desktop (default Flutter platforms).
+Flutter · Dart · http · PokéAPI · Material 3

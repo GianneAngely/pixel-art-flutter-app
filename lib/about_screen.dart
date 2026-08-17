@@ -1,46 +1,40 @@
 import 'package:flutter/material.dart';
 
 class AboutScreen extends StatelessWidget {
-  const AboutScreen({Key? key}) : super(key: key);
+  const AboutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF2C3E50),
       appBar: AppBar(
-        title: const Text('About Me'),
-        backgroundColor: const Color(0xFF1A252F),
+        backgroundColor: const Color(0xFFDC0A2D),
+        foregroundColor: Colors.white,
+        title: const Text('About'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const CircleAvatar(
-              radius: 60,
-              backgroundColor: Colors.white,
-              child: Icon(Icons.person, size: 80, color: Colors.grey),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'GianneAngely',
-              style: TextStyle(
-                fontSize: 24, 
-                fontWeight: FontWeight.bold, 
-                color: Colors.white
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.catching_pokemon, size: 80, color: Color(0xFFDC0A2D)),
+              const SizedBox(height: 16),
+              const Text('Pokédex',
+                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              Text(
+                'A Flutter app that browses Pokémon using the free PokéAPI — '
+                'a grid gallery with each Pokémon\'s types and base stats.',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.grey.shade600, height: 1.4),
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              'Submission Flutter Pemula',
-              style: TextStyle(fontSize: 16, color: Colors.white70),
-            ),
-             const SizedBox(height: 5),
-            const Text(
-              'Pixel Art Enthusiast 👾',
-              style: TextStyle(fontSize: 14, color: Colors.greenAccent),
-            ),
-          ],
+              const SizedBox(height: 24),
+              const Text('Built with Flutter · PokéAPI',
+                  style: TextStyle(fontWeight: FontWeight.w600)),
+              const SizedBox(height: 4),
+              const Text('by GianneAngely', style: TextStyle(color: Colors.grey)),
+            ],
+          ),
         ),
       ),
     );
