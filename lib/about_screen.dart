@@ -22,7 +22,7 @@ class AboutScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             const Text(
-              'Gianne Angely Puspa Pilatus',
+              'GianneAngely',
               style: TextStyle(
                 fontSize: 24, 
                 fontWeight: FontWeight.bold, 
