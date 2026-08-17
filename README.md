@@ -2,6 +2,8 @@
 
 A small **Flutter** app — a *Pixel Art Gallery* of classic video-game characters (Mario, Sonic, Link, Pikachu, and more) that you can browse, open for details, and an about page.
 
+**🔗 Live demo → [pixel-art-flutter-app.vercel.app](https://pixel-art-flutter-app.vercel.app)**
+
 <p align="center">
   <img src="screenshots/app.png" width="680" alt="Pixel Art Gallery main screen: a scrollable list of game characters, each with its name and source game">
 </p>
