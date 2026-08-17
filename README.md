@@ -1,6 +1,12 @@
 # Pixel Art (Flutter)
 
-A small **Flutter** app that showcases a set of pixel-art characters — a gallery you can browse, tap into for details, and an about page.
+A small **Flutter** app — a *Pixel Art Gallery* of classic video-game characters (Mario, Sonic, Link, Pikachu, and more) that you can browse, open for details, and an about page.
+
+<p align="center">
+  <img src="screenshots/app.png" width="680" alt="Pixel Art Gallery main screen: a scrollable list of game characters, each with its name and source game">
+</p>
+
+> Character artwork is loaded from external image URLs; a few of those links no longer resolve and show a placeholder icon.
 
 ## Screens
 
