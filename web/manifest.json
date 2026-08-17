@@ -1,11 +1,11 @@
 {
-    "name": "submission_pixel_art",
-    "short_name": "submission_pixel_art",
+    "name": "Pokédex",
+    "short_name": "Pokédex",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#DC0A2D",
+    "theme_color": "#DC0A2D",
+    "description": "A Flutter Pokédex powered by the PokéAPI.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
