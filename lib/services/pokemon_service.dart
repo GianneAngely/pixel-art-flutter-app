@@ -25,6 +25,13 @@ class PokemonService {
     }).toList();
   }
 
+  /// Fetches the first [limit] Pokémon with full detail (types, stats, size),
+  /// so the grid can render type-coloured cards. Details load concurrently.
+  Future<List<PokemonDetail>> fetchListDetailed({int limit = 30}) async {
+    final summaries = await fetchList(limit: limit);
+    return Future.wait(summaries.map((s) => fetchDetail(s.id)));
+  }
+
   /// Fetches full detail (types, stats, size) for one Pokémon.
   Future<PokemonDetail> fetchDetail(int id) async {
     final res = await http.get(Uri.parse('$_base/pokemon/$id'));

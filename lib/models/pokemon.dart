@@ -63,4 +63,6 @@ class PokemonDetail {
   String get dexNumber => _dex(id);
   double get heightM => heightDm / 10.0;
   double get weightKg => weightHg / 10.0;
+  String get primaryType => types.isNotEmpty ? types.first : 'normal';
+  int get statTotal => stats.fold(0, (sum, s) => sum + s.value);
 }

@@ -5,17 +5,17 @@ A Pokédex built with **Flutter**, powered live by the free [PokéAPI](https://p
 **🔗 Live demo → [flutter-pokedex-six.vercel.app](https://flutter-pokedex-six.vercel.app)**
 
 <p align="center">
-  <img src="screenshots/home.png" width="760" alt="Pokédex home screen: a grid of Pokémon cards with official artwork and Dex numbers">
-</p>
-<p align="center">
-  <img src="screenshots/detail.png" width="380" alt="Bulbasaur detail screen: type chips, height and weight, and base stat bars">
+  <img src="screenshots/home.png" width="265" alt="Home screen on a phone — a red search header over a two-column grid of type-coloured Pokémon cards">
+  &nbsp;&nbsp;&nbsp;
+  <img src="screenshots/detail.png" width="265" alt="Bulbasaur detail on a phone — type-coloured header, Grass/Poison chips, height and weight tiles, and animated base-stat bars">
 </p>
 
 ## Features
 
 - **Live data** from the PokéAPI — official artwork, types, height/weight, and base stats.
-- **Grid gallery** of Pokémon with their National Dex numbers.
-- **Detail view** with a type-coloured header, type chips, and base-stat bars.
+- **Search** by name or Dex number, filtering the grid as you type.
+- **Grid gallery** of type-coloured cards, each with its National Dex number.
+- **Detail view** with a type-coloured header, type chips, height/weight tiles, and animated base-stat bars.
 - Graceful **loading and error states**, with retry on failure.
 
 ## How it's built

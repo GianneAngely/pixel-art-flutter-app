@@ -25,5 +25,23 @@ const Map<String, Color> pokemonTypeColors = {
 Color colorForType(String type) =>
     pokemonTypeColors[type] ?? const Color(0xFF8A8A8A);
 
+/// A slightly darker shade of a colour, for gradients and accents.
+Color darken(Color c, [double amount = 0.14]) {
+  final hsl = HSLColor.fromColor(c);
+  return hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0)).toColor();
+}
+
+/// A soft two-stop gradient for a type (light top-left → richer bottom-right).
+List<Color> gradientForType(String type) {
+  final base = colorForType(type);
+  return [Color.lerp(base, Colors.white, 0.22)!, darken(base, 0.06)];
+}
+
+/// A readable foreground colour on top of [c].
+Color onColor(Color c) =>
+    ThemeData.estimateBrightnessForColor(c) == Brightness.dark
+        ? Colors.white
+        : const Color(0xFF23233B);
+
 String capitalize(String s) =>
     s.isEmpty ? s : '${s[0].toUpperCase()}${s.substring(1)}';
